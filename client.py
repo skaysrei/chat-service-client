@@ -1,5 +1,5 @@
 import asyncio
-from sys import stdout
+import sys
 
 
 params = {
@@ -18,10 +18,10 @@ class ChatClient(asyncio.Protocol):
         self.sockname = transport.get_extra_info("sockname")
 
     def data_received(self, data):
-        print('Data received: {}'.format(data.decode()))
+        print(f'\n{data.decode()}\n')
 
     def connection_lost(self, exc):
-        print('The server closed the connection')
+        print('\n\nConnection terminated')
         self.on_con_lost.set_result(True)
 
     # middleware yet to be implemented
@@ -29,21 +29,22 @@ class ChatClient(asyncio.Protocol):
         pass
 
     def send(self, msg):
-        #if msg and self.user:
-        self.last_message = "{author}: {content}".format(author=self.user, content=msg)
         self.transport.write(msg.encode())
 
     async def getmsgs(self, loop):
         self.output = self.stdoutput
         self.output("Connected to {0}:{1}\n".format(*self.sockname))
         while True:
-            msg = await loop.run_in_executor(None, input, "{}: ".format(self.user)) #Get stdout input forever
-            self.send(msg)
-            if msg == 'quit':
+            msg = await asyncio.get_event_loop().run_in_executor(
+                    None, sys.stdin.readline)
+            cleanedUp = msg[:-1]
+            if cleanedUp == 'quit':
                 break
+            self.send(cleanedUp)
+        return
 
     def stdoutput(self, data):
-        stdout.write(data.strip() + '\n')
+        sys.stdout.write(data.strip() + '\n')
 
 
 async def main():
