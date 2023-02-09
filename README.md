@@ -14,4 +14,6 @@ A simple Python3 client for the erlang-chat-service project
 
 [asyncio: Queues](https://docs.python.org/3/library/asyncio-queue.html)
 
+[aioconsole like, Non-blocking Console Input](https://stackoverflow.com/a/65326191)
+
 [A simple asyncio chat server and client made in Python](https://github.com/henry232323/Simple-Asyncio-Chat-Client)

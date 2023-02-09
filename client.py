@@ -38,12 +38,12 @@ class ChatClient(asyncio.Protocol):
 
     async def getmsgs(self, loop):
         self.output = self.stdoutput
-        self.output("Connected to {0}:{1}\n".format(*self.sockname))
+        self.output("\n\nConnected to {0}<{1}> on port {2}\n".format(*self.sockname, params['server_port']))
         while True:
             msg = await asyncio.get_event_loop().run_in_executor(
                     None, sys.stdin.readline)
             cleanedUp = msg[:-1]
-            if cleanedUp == 'quit':
+            if cleanedUp == '!quit':
                 break
             self.send(cleanedUp)
 
@@ -52,7 +52,15 @@ class ChatClient(asyncio.Protocol):
 
 
 async def main():
-    # using event_loop and low level APIs.
+    if len(sys.argv) > 1:
+        for index, arg in enumerate(sys.argv):
+            match arg:
+                case '-ip':
+                    params['server_ip'] = sys.argv[index + 1]
+                case '-port':
+                    params['server_port'] = sys.argv[index + 1]
+
+        # using event_loop and low level APIs.
     loop = asyncio.get_running_loop()
 
     on_con_lost = loop.create_future()
