@@ -19,6 +19,10 @@ You can also pass the client some arguments to modify the behaviour at startup:
 ```
 -port [server_port]
 ```
+Shows the raw messages received:
+```
+-debug
+```
 
 ## Commands
 All the business logic is implemented server-side, to have a look at the list of commands just 
@@ -29,6 +33,12 @@ To quit the client simply type this command:
 ```
 !quit
 ```
+
+<br></br>
+
+## Known issues:
+1. After sending a message with no response (example SAY:), the input stops working, current
+workaround is to print an empty line to release it, needs a better solution.
 
 <br></br>
 
