@@ -51,7 +51,7 @@ class ChatClient(asyncio.Protocol):
         sys.stdout.write(data.strip() + '\n')
 
 
-async def main():
+async def main(**kwargs): # maybe switch to **kwargs in future, (or even better: https://docs.python.org/3/library/argparse.html)
     if len(sys.argv) > 1:
         for index, arg in enumerate(sys.argv):
             match arg:
