@@ -18,7 +18,12 @@ class ChatClient(asyncio.Protocol):
         self.sockname = transport.get_extra_info("sockname")
 
     def data_received(self, data):
-        print(f'\n{data.decode()}\n')
+        parsed = data.decode()
+        temp = parsed.removeprefix('<h>') # workaround for random double header bug
+        if parsed.startswith('<h>'):
+            message = temp.removeprefix('<h>')
+            if len(message) > 0:
+                print(f'\n{message}\n')
 
     def connection_lost(self, exc):
         print('\n\nConnection terminated')
@@ -41,7 +46,6 @@ class ChatClient(asyncio.Protocol):
             if cleanedUp == 'quit':
                 break
             self.send(cleanedUp)
-        return
 
     def stdoutput(self, data):
         sys.stdout.write(data.strip() + '\n')
@@ -67,7 +71,7 @@ async def main():
     # is lost and close the transport.
     try:
         await task
-        await on_con_lost
+        # await on_con_lost
     finally:
         transport.close()
 
