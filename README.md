@@ -32,7 +32,7 @@ To quit the client simply type this command:
 
 <br></br>
 
-### References used during the development: 
+### References used during development: 
 
 [asyncio — Asynchronous I/O](https://docs.python.org/3/library/asyncio.html)
 
