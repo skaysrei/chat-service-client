@@ -24,7 +24,7 @@ You can also pass the client some arguments to modify the behaviour at startup:
 All the business logic is implemented server-side, to have a look at the list of commands just 
 visit the server project's [GitHub page](https://github.com/skaysrei/erlang-chat-service).
 
-###### To quit the app
+##### To quit the app
 To quit the client simply type this command:
 ```
 !quit
