@@ -1,7 +1,37 @@
-# chat-service-client
-A simple Python3 client for the erlang-chat-service project
+# Chat Service Client
+A simple Python3 TCP client for the [erlang-chat-service](https://github.com/skaysrei/erlang-chat-service) project. 
+The client runs two async tasks in the main event loop: one that listens, and one that waits for user inputs. 
+By default at startup it it will attempt to connect on: 'localhost:1337'.
+
+## Requirements
+To run the client you will need to have Python3 installed on your machine.
+You can get it [from here](https://www.python.org/downloads/).
+
+## Running the client
+In order to use the app simply clone the repository and from within the folder run the client:
+```
+python3 client.py
+```
+You can also pass the client some arguments to modify the behaviour at startup:
+```
+-ip [server_ip]
+```
+```
+-port [server_port]
+```
+
+## Commands
+All the business logic is implemented server-side, to have a look at the list of commands just 
+visit the server project's [GitHub page](https://github.com/skaysrei/erlang-chat-service).
+
+###### To quit the app
+To quit the client simply type this command:
+```
+!quit
+```
 
 <br></br>
+
 ### References used during the development: 
 
 [asyncio — Asynchronous I/O](https://docs.python.org/3/library/asyncio.html)
