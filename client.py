@@ -5,6 +5,7 @@ import sys
 params = {
     'server_ip': 'localhost',
     'server_port': 1337,
+    'debug': False,
 }
 
 class ChatClient(asyncio.Protocol):
@@ -18,6 +19,8 @@ class ChatClient(asyncio.Protocol):
         self.sockname = transport.get_extra_info("sockname")
 
     def data_received(self, data):
+        if params['debug']:
+            print(f"\nDecoded data from server:\n{data.decode()}\n")
         parsed = data.decode()
         temp = parsed.removeprefix('<h>') # workaround for random double header bug
         if parsed.startswith('<h>'):
@@ -42,6 +45,7 @@ class ChatClient(asyncio.Protocol):
         while True:
             msg = await asyncio.get_event_loop().run_in_executor(
                     None, sys.stdin.readline)
+            print('') # release the client??
             cleanedUp = msg[:-1]
             if cleanedUp == '!quit':
                 break
@@ -59,6 +63,8 @@ async def main(**kwargs): # maybe switch to **kwargs in future, (or even better:
                     params['server_ip'] = sys.argv[index + 1]
                 case '-port':
                     params['server_port'] = sys.argv[index + 1]
+                case '-debug':
+                    params['debug'] = True
 
         # using event_loop and low level APIs.
     loop = asyncio.get_running_loop()
